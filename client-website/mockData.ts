@@ -1,4 +1,3 @@
-
 export interface FundPoint {
   time: string;
   nav: number;
@@ -23,7 +22,23 @@ export interface Fund {
   historicalPoints: FundPoint[];
 }
 
-export const MOCK_FUNDS: Fund[] = [
+function generateHistory(start: number, end: number): FundPoint[] {
+  const points: FundPoint[] = [];
+  const count = 20;
+  for (let i = 0; i < count; i++) {
+    const ratio = i / (count - 1);
+    const nav = start + (end - start) * ratio + (Math.random() - 0.5) * 5;
+    const benchmark = start * 0.95 + (end - start) * 0.8 * ratio + (Math.random() - 0.5) * 3;
+    points.push({
+      time: `${10 + Math.floor(i / 5)}:00 AM`,
+      nav: isNaN(nav) ? 0 : nav,
+      benchmark: isNaN(benchmark) ? 0 : benchmark
+    });
+  }
+  return points;
+}
+
+const RAW_FUNDS: Fund[] = [
   {
     id: '1',
     name: 'Axis Bluechip Fund',
@@ -108,21 +123,13 @@ export const MOCK_FUNDS: Fund[] = [
   }
 ];
 
-function generateHistory(start: number, end: number): FundPoint[] {
-  const points: FundPoint[] = [];
-  const count = 20;
-  for (let i = 0; i < count; i++) {
-    const ratio = i / (count - 1);
-    const nav = start + (end - start) * ratio + (Math.random() - 0.5) * 5;
-    const benchmark = start * 0.95 + (end - start) * 0.8 * ratio + (Math.random() - 0.5) * 3;
-    points.push({
-      time: `${10 + Math.floor(i / 5)}:00 AM`,
-      nav,
-      benchmark
-    });
-  }
-  return points;
-}
+export const MOCK_FUNDS = RAW_FUNDS.map(fund => ({
+  ...fund,
+  returns3y: !isNaN(fund.returns3y) ? fund.returns3y : 0,
+  alpha: !isNaN(fund.alpha) ? fund.alpha : 0,
+  stdDev: !isNaN(fund.stdDev) ? fund.stdDev : 0,
+  nav: !isNaN(fund.nav) ? fund.nav : 0
+}));
 
 export const PORTFOLIO_STATS = {
   totalValue: 124500,

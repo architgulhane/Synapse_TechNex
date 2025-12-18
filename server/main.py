@@ -1,10 +1,28 @@
-from fastapi import FastAPI
+from fastapi import APIRouter, FastAPI
 from app.router.chatbot_router import router as chatbot_router
+from app.router.mutualfund_list_router import router as get_top_schemes
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import os
 
-app = FastAPI(title="Secure Modular Chatbot")
+
+app = FastAPI(title="Secure Modular Sarthi")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], 
+    allow_credentials=True,
+    allow_methods=["*"], 
+    allow_headers=["*"], 
+)
+
+# chatbot Route
 app.include_router(chatbot_router)
+
+# mutual Funds list
+app.include_router(get_top_schemes)
+
+
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 8000))
