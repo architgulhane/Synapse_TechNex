@@ -172,9 +172,6 @@ export default function PortfolioScreen() {
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <TouchableOpacity style={styles.backButton}>
-            <Ionicons name="arrow-back" size={24} color="black" />
-          </TouchableOpacity>
           <Text style={styles.headerTitle}>Top Mutual Fund Predictions</Text>
           <TouchableOpacity style={styles.profileButton}>
             <Ionicons name="person-add" size={20} color="black" />
@@ -183,8 +180,6 @@ export default function PortfolioScreen() {
 
         {/* Net Worth & Chart */}
         <View style={styles.chartSection}>
-          <Text style={styles.netWorthLabel}>NET WORTH</Text>
-          <Text style={styles.netWorthValue}>₹12,50,000</Text>
 
           <View style={styles.chartContainer}>
             {/* Donut Chart with dynamic segment */}
